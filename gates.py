@@ -66,7 +66,10 @@ class UnaryGate(LogicGate):
 
 
 class AndGate(BinaryGate):
-    """Subclass of BinaryGate which performs the "And" gate logic."""
+    """
+    Subclass of BinaryGate which performs the "And" gate logic. Both input
+    pins must be True for the gate to return True.
+    """
 
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
@@ -74,10 +77,40 @@ class AndGate(BinaryGate):
 
     def perform_logic_gate(self):
         """Gets and compares pins. If both pins are 1, returns 1, else 0."""
-
         a = self.get_pin_a()
         b = self.get_pin_b()
         if a==1 and b==1:
             return 1
         else:
             return 0
+
+
+class OrGate(BinaryGate):
+    """
+    Subclass of BinaryGate which performs the "OR" gate logic. Either input
+    pin must be True for gate to return True.
+    """
+
+    def __init__(self, n) -> None:
+        # initialize any data items which are inherited.
+        super().__init__(n)
+
+    def perform_logic_gate(self):
+        """Gets and compares pins. If any pin is 1 it returns 1, else 0."""
+        a = self.get_pin_a()
+        b = self.get_pin_b()
+        if a==1 or b==1:
+            return 1
+        else:
+            return 0
+
+
+class NotGate(UnaryGate):
+    """
+    """
+    def __init__(self, n) -> None:
+        super().__init__(n)
+
+    def perform_gate_logic(self):
+        pin = self.get_pin()
+        return not pin
