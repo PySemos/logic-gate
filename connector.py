@@ -21,4 +21,4 @@ class Connector:
             if self.pin_b == None:
                 self.pin_b == source
             else:
-                raise RuntimeError("Error: there are no empty pins")
+                raise RuntimeError("Error: There are no available pins")
