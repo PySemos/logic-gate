@@ -75,7 +75,7 @@ class AndGate(BinaryGate):
         # initialize any data items which are inherited.
         super().__init__(n)
 
-    def perform_logic_gate(self):
+    def perform_gate_logic(self):
         """Gets and compares pins. If both pins are 1, returns 1, else 0."""
         a = self.get_pin_a()
         b = self.get_pin_b()
@@ -95,7 +95,7 @@ class OrGate(BinaryGate):
         # initialize any data items which are inherited.
         super().__init__(n)
 
-    def perform_logic_gate(self):
+    def perform_gate_logic(self):
         """Gets and compares pins. If any pin is 1 it returns 1, else 0."""
         a = self.get_pin_a()
         b = self.get_pin_b()
