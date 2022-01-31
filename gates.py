@@ -35,15 +35,27 @@ class BinaryGate(LogicGate):
 
     def get_pin_a(self):
         """Gets the first input line from the user."""
-        return int(input("Enter Pin A input for gate " \
-            + self.get_label() \
-            + "-->"))
+        if self.pin_a == None:
+            return int(input("Enter Pin A input for gate " \
+                + self.get_label() \
+                + "-->"))
+        else:
+            return self.pin_a.get_from().get_output()
 
     def get_pin_b(self):
         """Gets the second input line from the user."""
         return int(input("Enter Pin B input for gate " \
             + self.get_label() \
             + "-->"))
+
+    def set_next_pin(self, source):
+        if self.pin_a == None:
+            self.pin_a == source
+        else: 
+            if self.pin_b == None:
+                self.pin_b == source
+            else:
+                raise RuntimeError("Error: There are no available pins")
 
 
 class UnaryGate(LogicGate):
