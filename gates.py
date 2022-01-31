@@ -22,7 +22,8 @@ class LogicGate:
 
 class BinaryGate(LogicGate):
     """
-    Subclass of LogicGate class which adds two input lines.
+    Subclass of LogicGate class which gets the values from the two 
+    input lines.
     """
 
     def __init__(self, n) -> None:
@@ -38,7 +39,7 @@ class BinaryGate(LogicGate):
             + self.get_label() \
             + "-->"))
 
-    def get_pin_ab(self):
+    def get_pin_b(self):
         """Gets the second input line from the user."""
         return int(input("Enter Pin B input for gate " \
             + self.get_label() \
@@ -47,10 +48,36 @@ class BinaryGate(LogicGate):
 
 class UnaryGate(LogicGate):
     """
-    
+    Subclass of LogicGate class which gets the value from the 
+    input line.
     """
 
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
         super().__init__(n)
-    
+
+        self.pin = None
+
+    def get_pin(self):
+        """Gets the input line from the user."""
+        return int(input("Enter Pin input for gate " \
+            + self.get_label() \
+            + "-->"))
+
+
+class AndGate(BinaryGate):
+    """Subclass of BinaryGate which performs the "And" gate logic."""
+
+    def __init__(self, n) -> None:
+        # initialize any data items which are inherited.
+        super().__init__(n)
+
+    def perform_logic_gate(self):
+        """Gets and compares pins. If both pins are 1, returns 1, else 0."""
+
+        a = self.get_pin_a()
+        b = self.get_pin_b()
+        if a==1 and b==1:
+            return 1
+        else:
+            return 0
