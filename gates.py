@@ -107,10 +107,13 @@ class OrGate(BinaryGate):
 
 class NotGate(UnaryGate):
     """
+    Subclass of UnaryGate. Output is the opposite of the input pin.
     """
     def __init__(self, n) -> None:
+        # initialize any data items which are inherited.
         super().__init__(n)
 
     def perform_gate_logic(self):
+        """Returns the opposite Bool of the pin."""
         pin = self.get_pin()
         return not pin
