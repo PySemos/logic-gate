@@ -1,5 +1,4 @@
 
-
 class LogicGate:
     """
     Most general class to build a Logic Gate. Contains the methods 
@@ -20,23 +19,38 @@ class LogicGate:
         self.output = self.perform_gate_logic()
         return self.output
 
+
 class BinaryGate(LogicGate):
     """
+    Subclass of LogicGate class which adds two input lines.
     """
 
     def __init__(self, n) -> None:
+        # initialize any data items which are inherited.
         super().__init__(n)
 
         self.pin_a = None
         self.pin_b = None
 
     def get_pin_a(self):
+        """Gets the first input line from the user."""
         return int(input("Enter Pin A input for gate " \
             + self.get_label() \
             + "-->"))
 
     def get_pin_ab(self):
+        """Gets the second input line from the user."""
         return int(input("Enter Pin B input for gate " \
             + self.get_label() \
             + "-->"))
+
+
+class UnaryGate(LogicGate):
+    """
+    
+    """
+
+    def __init__(self, n) -> None:
+        # initialize any data items which are inherited.
+        super().__init__(n)
     
