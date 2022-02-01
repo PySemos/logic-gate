@@ -36,24 +36,28 @@ class BinaryGate(LogicGate):
     def get_pin_a(self):
         """Gets the first input line from the user."""
         if self.pin_a == None:
-            return int(input("Enter Pin A input for gate " \
-                + self.get_label() \
-                + "-->"))
+            return int(input("Enter Pin A input for gate " + self.get_label() + "-->"))
         else:
             return self.pin_a.get_from().get_output()
 
     def get_pin_b(self):
         """Gets the second input line from the user."""
-        return int(input("Enter Pin B input for gate " \
-            + self.get_label() \
-            + "-->"))
+        if self.pin_b == None:
+            return int(input("Enter Pin B input for gate "+self.get_label()+"-->"))
+        else:
+            return self.pin_b.get_from().get_output()
 
     def set_next_pin(self, source):
+        # in the BinaryGate class, for gates with two possible input lines,
+        # the connector must be connected to only one line. If both of them
+        # are available we will choose pin_a by default. If pin_a is already
+        # connnected, then we will choose pin_b. It is not possible to
+        # connect to a gate with no available input lines.
         if self.pin_a == None:
-            self.pin_a == source
-        else: 
+            self.pin_a = source
+        else:
             if self.pin_b == None:
-                self.pin_b == source
+                self.pin_b = source
             else:
                 raise RuntimeError("Error: There are no available pins")
 
@@ -64,17 +68,24 @@ class UnaryGate(LogicGate):
     input line.
     """
 
-    def __init__(self, n) -> None:
+    def __init__(self,n):
         # initialize any data items which are inherited.
-        super().__init__(n)
+        LogicGate.__init__(self,n)
 
         self.pin = None
 
     def get_pin(self):
         """Gets the input line from the user."""
-        return int(input("Enter Pin input for gate " \
-            + self.get_label() \
-            + "-->"))
+        if self.pin == None:
+            return int(input("Enter Pin input for gate "+self.get_label()+"-->"))
+        else:
+            return self.pin.get_from().get_output()
+
+    def set_next_pin (self, source):
+        if self.pin == None:
+            self.pin = source
+        else:
+            raise RuntimeError("Error: No available pins")
 
 
 class AndGate(BinaryGate):
@@ -123,9 +134,54 @@ class NotGate(UnaryGate):
     """
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
-        super().__init__(n)
+        UnaryGate.__init__(self, n)
 
     def perform_gate_logic(self):
         """Returns the opposite Bool of the pin."""
-        pin = self.get_pin()
-        return not pin
+        if self.get_pin():
+            return 0
+        else:
+            return 1
+
+
+class XorGate(BinaryGate):
+
+    def __init__(self,n):
+        BinaryGate.__init__(self,n)
+
+    def perform_gate_logic(self):
+
+        a = self.get_pin_a()
+        b = self.get_pin_b()
+        if a ==1 and b==1:
+            return 0
+        elif (a ==0 and b==1) or (a==1 and b==0):
+            return 1
+        else:
+            return 0
+
+
+class NorGate(BinaryGate):
+
+    def __init__(self,n):
+        BinaryGate.__init__(self,n)
+
+    def perform_gate_logic(self):
+
+        a = self.get_pin_a()
+        b = self.get_pin_b()
+        return NotGate(OrGate(self))
+
+
+class NandGate(BinaryGate):
+
+    def __init__(self,n):
+        BinaryGate.__init__(self,n)
+
+    def perform_gate_logic(self):
+
+        a = self.get_pin_a()
+        b = self.get_pin_b()
+        return NotGate(AndGate(self))
+
+            
