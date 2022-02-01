@@ -28,7 +28,7 @@ class BinaryGate(LogicGate):
 
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
-        super().__init__(n)
+        LogicGate.__init__(self, n)
 
         self.pin_a = None
         self.pin_b = None
@@ -96,7 +96,7 @@ class AndGate(BinaryGate):
 
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
-        super().__init__(n)
+        BinaryGate.__init__(self, n)
 
     def perform_gate_logic(self):
         """Gets and compares pins. If both pins are 1, returns 1, else 0."""
@@ -116,7 +116,7 @@ class OrGate(BinaryGate):
 
     def __init__(self, n) -> None:
         # initialize any data items which are inherited.
-        super().__init__(n)
+        BinaryGate.__init__(self, n)
 
     def perform_gate_logic(self):
         """Gets and compares pins. If any pin is 1 it returns 1, else 0."""
@@ -144,6 +144,7 @@ class NotGate(UnaryGate):
             return 1
 
 
+# Extra gates
 class XorGate(BinaryGate):
 
     def __init__(self,n):
